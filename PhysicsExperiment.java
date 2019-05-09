@@ -36,7 +36,6 @@ public class PhysicsExperiment {
     // Your scheduleTable is initialized as all 0's so far. Your code will put 1's
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numStudents + 1][numSteps + 1];
-
     int maxStep = 0;
     int remStudent = 1;
     int currentStep = 0;
@@ -100,7 +99,7 @@ public class PhysicsExperiment {
           System.out.print(step + " ");
         }
       }
-      System.out.println("");
+      System.out.println();
     }
   }
 
@@ -160,7 +159,7 @@ public class PhysicsExperiment {
     int[][] signUpsLookup = makeSignUpLookup(numSteps, signUps);
     int[][] schedule = scheduleExperiments(numStudents, numSteps, signUpsLookup);
     printResults(schedule);
-    System.out.println("");
+    System.out.println();
   }
 
   /**
