@@ -34,6 +34,11 @@ public class FastestRoutePublicTransit {
   ) {
     // Your code along with comments here. Feel free to borrow code from any
     // of the existing method. You can also make new helper methods.
+    
+    int numVertices = lengths[0].length;
+    // This is the array where we'll store all the final shortest times
+    int[] times = new int[numVertices];
+
     return 0;
   }
 
