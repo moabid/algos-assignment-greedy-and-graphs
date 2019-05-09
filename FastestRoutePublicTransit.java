@@ -36,8 +36,22 @@ public class FastestRoutePublicTransit {
     // of the existing method. You can also make new helper methods.
     
     int numVertices = lengths[0].length;
+
     // This is the array where we'll store all the final shortest times
     int[] times = new int[numVertices];
+
+    // processed[i] will true if vertex i's shortest time is already finalized
+    Boolean[] processed = new Boolean[numVertices];
+
+    // Initialize all distances as INFINITE and processed[] as false
+    for (int v = 0; v < numVertices; v++) {
+      times[v] = Integer.MAX_VALUE;
+      processed[v] = false;
+    }
+
+    // Distance of source vertex from itself is always 0
+    times[S] = 0;
+
 
     return 0;
   }
