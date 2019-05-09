@@ -37,7 +37,24 @@ public class PhysicsExperiment {
     // in the table in the right places based on the return description
     int[][] scheduleTable = new int[numStudents + 1][numSteps + 1];
 
-    // Your code goes here
+    int maxStep = 0;
+    int remStudent = 1;
+    int currentStep = 0;
+    boolean valid = true;
+    while(valid) {
+      for (int student = 1; student <= numStudents; student++) {
+        for (int step = currentStep + 1; step <= numSteps; step++) {
+          if (signUpTable[student][step] == 1) {
+            if (step > maxStep) {
+              remStudent = student;
+              maxStep = step;
+            }
+          } else {
+            break;
+          }
+        }
+      }
+
 
     return scheduleTable;
   }
