@@ -32,9 +32,6 @@ public class FastestRoutePublicTransit {
     int[][] first,
     int[][] freq
   ) {
-    // Your code along with comments here. Feel free to borrow code from any
-    // of the existing method. You can also make new helper methods.
-    
     int numVertices = lengths[0].length;
 
     // This is the array where we'll store all the final shortest times
@@ -52,8 +49,36 @@ public class FastestRoutePublicTransit {
     // Distance of source vertex from itself is always 0
     times[S] = 0;
 
+    // Find shortest path to all the vertices
+    for (int count = 0; count < numVertices - 1 ; count++) {
+      // Pick the minimum distance vertex from the set of vertices not yet processed.
+      // u is always equal to source in first iteration.
+      // Mark u as processed.
+      int u = findNextToProcess(times, processed);
+      processed[u] = true;
 
-    return 0;
+      // Update time value of all the adjacent vertices of the picked vertex.
+      for (int v = 0; v < numVertices; v++) {
+        // Update time[v] only if is not processed yet, there is an edge from u to v,
+        // and total weight of path from source to v through u is smaller than current value of time[v]
+        if (!processed[v] && lengths[u][v]!=0 && times[u] != Integer.MAX_VALUE && findNextTrain(first[u][v], freq[u][v], startTime) + times[u]+lengths[u][v] < times[v]) {
+          times[v] = findNextTrain(first[u][v], freq[u][v], startTime) + times[u] + lengths[u][v];
+          startTime+=times[v];
+        }
+      }
+    }
+    return times[T];
+  }
+
+  // return the time left to the next train
+  private int findNextTrain(int first, int frequency, int startTime) {
+    int i = 0;
+    while (true) {
+      if (first + (i * frequency) >= startTime) {
+        return first + (i * frequency) - startTime;
+      }
+      i++;
+    }
   }
 
   /**
@@ -80,6 +105,10 @@ public class FastestRoutePublicTransit {
     System.out.println("Vertex Distances (time) from Source");
     for (int i = 0; i < times.length; i++)
         System.out.println(i + ": " + times[i] + " minutes");
+  }
+
+  public void printShortestTime(int start, int end, int time) {
+    System.out.println("Vertex Distances (time) from " + start + " to " + end + " - " + time);
   }
 
   /**
@@ -140,9 +169,37 @@ public class FastestRoutePublicTransit {
       {8, 11, 0, 0, 0, 0, 1, 0, 7},
       {0, 0, 2, 0, 0, 0, 6, 7, 0}
     };
+    /* first(e) */
+    int firstGraph[][] = new int[][]{
+      {0, 4, 0, 0, 0, 0, 0, 18, 0},
+      {14, 0, 18, 0, 0, 0, 10, 11, 0},
+      {0, 18, 10, 17, 10, 14, 0, 0, 12},
+      {0, 0, 17, 0, 19, 14, 0, 0, 0},
+      {0, 0, 0, 9, 0, 10, 0, 0, 0},
+      {0, 0, 14, 14, 10, 0, 12, 0, 0},
+      {0, 0, 0, 0, 0, 12, 0, 11, 16},
+      {18, 11, 0, 0, 0, 0, 11, 0, 17},
+      {0, 0, 12, 0, 0, 0, 16, 17, 0}
+    };
+    /* freq(e) */
+    int freqGraph[][] = new int[][]{
+      {0, 5, 0, 0, 0, 0, 0, 10, 0},
+      {12, 0, 20, 0, 0, 0, 10, 15, 0},
+      {0, 18, 10, 25, 10, 30, 0, 0, 14},
+      {0, 0, 15, 0, 11, 14, 0, 0, 0},
+      {0, 0, 0, 19, 0, 10, 0, 0, 0},
+      {0, 0, 15, 14, 13, 0, 8, 0, 0},
+      {0, 0, 0, 0, 0, 10, 0, 14, 16},
+      {20, 11, 0, 0, 0, 0, 10, 0, 14},
+      {0, 0, 12, 0, 0, 0, 15, 18, 0}
+    };
     FastestRoutePublicTransit t = new FastestRoutePublicTransit();
     t.shortestTime(lengthTimeGraph, 0);
 
-    // You can create a test case for your implemented method for extra credit below
+    // You can create a test case for your implemented method below
+    t.printShortestTime(0,2,t.myShortestTravelTime(0, 2, 30, lengthTimeGraph,  firstGraph, freqGraph));
+    t.printShortestTime(3,7,t.myShortestTravelTime(3, 7, 20, lengthTimeGraph,  firstGraph, freqGraph));
+    t.printShortestTime(1,5,t.myShortestTravelTime(1, 5, 55, lengthTimeGraph,  firstGraph, freqGraph));
+    t.printShortestTime(8,6,t.myShortestTravelTime(8, 6, 200, lengthTimeGraph,  firstGraph, freqGraph));
   }
 }
