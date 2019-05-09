@@ -54,8 +54,14 @@ public class PhysicsExperiment {
           }
         }
       }
-
-
+      for (int i = currentStep + 1; i <= maxStep; i++) {
+        scheduleTable[remStudent][i] = 1;
+      }
+      currentStep = maxStep;
+      if (maxStep == numSteps) {
+        valid = false;
+      }
+    }
     return scheduleTable;
   }
 
