@@ -1,7 +1,7 @@
 /**
  * Public Transit
  * Author: Mohammed Abid and Carolyn Yao
- * Does this compile? Y
+ * Does this compile? YES
  */
 
 /**
